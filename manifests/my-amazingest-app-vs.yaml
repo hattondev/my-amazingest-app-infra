@@ -1,0 +1,22 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: my-amazingest-app-vs
+  labels:
+    app: my-amazingest-app
+    version: 0.0.1
+    backstage.io/kubernetes-id: my-amazingest-app
+spec:
+  gateways:
+  - istio-gateway/apps-gateway
+  hosts:
+  - my-amazingest-app.apps.wwtlab.net
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: my-amazingest-app-svc
+        port:
+          number: 80
+      weight: 100
